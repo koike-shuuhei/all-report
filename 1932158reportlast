@@ -1,0 +1,248 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://unpkg.com/three@0.137.4/build/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.137.4/examples/js/controls/OrbitControls.js"></script>
+  </head>
+<body>
+ <script>
+      // ページの読み込みを待つ
+      window.addEventListener('DOMContentLoaded', init);
+
+      function init() {
+        // サイズを指定
+        const width = 800
+        const height = 600;
+
+        // レンダラーを作成
+        var renderer = new THREE.WebGLRenderer();
+        document.body.appendChild(renderer.domElement);
+        renderer.setSize(width, height);
+        
+        renderer.setClearColor(0xddffff);
+
+        // シーンを作成
+        const scene = new THREE.Scene();
+
+        // カメラを作成
+        const camera = new THREE.PerspectiveCamera(45, width / height);
+        // カメラの初期座標を設定
+        camera.position.set(0, 5, 10);
+
+        // カメラコントローラーを作成
+        const controls = new THREE.OrbitControls(camera, document.body); 
+        
+        // 平行光源1
+        var directionalLight1 = new THREE.DirectionalLight(0xffffff);
+        directionalLight1.position.set(10, 10, 10);
+        // シーンに追加
+        scene.add(directionalLight1);
+        // 平行光源2
+        var directionalLight2 = new THREE.DirectionalLight(0x888888);
+        directionalLight2.position.set(-10, -10, 10);
+        // シーンに追加
+        scene.add(directionalLight2);
+
+    
+
+        // 平面を作成
+        var textureLoader1 = new THREE.TextureLoader();
+        var texture1 = textureLoader1.load("zimen2.jpg");
+        var mat1 = new THREE.MeshPhongMaterial();
+        mat1.map = texture1;
+         var planeGeometry = new THREE.PlaneGeometry(10,20,10,10);
+
+        var plane = new THREE.Mesh(planeGeometry,mat1);
+        plane.rotation.set( -Math.PI/2, 0, 0 );
+        plane.position.set(0,0,0);
+        scene.add(plane);
+        // 頭を作成
+        var head_g = new THREE.SphereGeometry( 0.6, 25, 25 );
+        var material_b = new THREE.MeshPhongMaterial({ color: 0xffffcc });
+        var head = new THREE.Mesh(head_g, material_b);
+        head.position.set(0,0.62,1.1);//allの中心が原点になる
+
+        //体を作成
+        var body_g = new THREE.SphereGeometry( 0.6, 32, 32 );
+        var material_r = new THREE.MeshPhongMaterial({ color: 0xffffcc });
+        var body = new THREE.Mesh( body_g, material_r);
+        body.scale.z =1.6;
+        body.scale.y =0.7;
+        body.scale.x =0.8;
+        body.position.set(0,-0.1,0.11);
+        //しっぽ
+        var tale_g = new THREE.SphereGeometry( 0.5, 32, 32 );
+        var material_tale = new THREE.MeshPhongMaterial({ color: 0xffffcc });
+        var tale = new THREE.Mesh( tale_g, material_tale);
+        tale.scale.z =0.25;
+        tale.scale.y =1;
+        tale.scale.x =0.25;
+        tale.position.set(0,0.6,-0.6);
+       
+        //左足を作成
+        var leg_g = new THREE.SphereGeometry( 0.25, 32, 32 );
+        var material_l = new THREE.MeshPhongMaterial({ color: 0xffffcc });
+        var lleg = new THREE.Mesh( leg_g, material_l);
+        lleg.scale.z = 0.6;
+        lleg.scale.y = 1.8;
+        lleg.scale.x = 0.6;
+        lleg.position.set(0.3,-0.55,0.8);
+
+        //右足を作成
+        var rleg = new THREE.Mesh( leg_g, material_l);
+        rleg.scale.z = 0.6;
+        rleg.scale.y = 1.8;
+        rleg.scale.x = 0.6;
+        rleg.position.set(-0.3,-0.55,0.8);
+    
+        //右後ろ脚
+        var r2leg = new THREE.Mesh( leg_g, material_l);
+        r2leg.scale.z = 0.6;
+        r2leg.scale.y = 1.8;
+        r2leg.scale.x = 0.6;
+        r2leg.position.set(-0.3,-0.55,-0.5);
+
+        //右後ろ脚
+        var l2leg = new THREE.Mesh( leg_g, material_l);
+        l2leg.scale.z = 0.6;
+        l2leg.scale.y = 1.8;
+        l2leg.scale.x = 0.6;
+        l2leg.position.set(0.3,-0.55,-0.5);
+
+        //右耳の作成
+        var ear = new THREE.CylinderGeometry( 0.01, 0.1, 0.25, 20 );
+        var material_ear = new THREE.MeshPhongMaterial({ color: 0xffffcc });
+        var  ear_r = new THREE.Mesh( ear, material_ear);
+        ear_r.rotation.y = 1.5;
+        ear_r.position.set(0.24,1.2,1.15);
+
+        //口
+        var kuti_g = new THREE.CylinderGeometry( 0.01, 0.1, 0.2, 20 );
+        var material_kuti = new THREE.MeshPhongMaterial({ color: 0xff0000 });
+        var  kuti = new THREE.Mesh( kuti_g, material_kuti);
+        kuti.rotation.y = 1.5;
+        kuti.position.set(0,0.45,1.6);
+
+        //左耳
+        var ear_l = new THREE.Mesh( ear, material_ear);
+        ear_l.rotation.y = 1.5;
+        ear_l.position.set(-0.24,1.2,1.15);
+        //黒右目
+        var b_eye = new THREE.SphereGeometry( 0.06, 32, 32 );
+        var material_be = new THREE.MeshPhongMaterial({ color: 0x000000 });
+        var b_eye_r = new THREE.Mesh( b_eye, material_be);
+        b_eye_r.scale.z =0.5;
+        b_eye_r.scale.y =1;
+        b_eye_r.scale.x =0.5;
+        b_eye_r.position.set(0.23,0.71,1.66);
+        //黒左目
+        var b_eye_l= new THREE.Mesh( b_eye, material_be);
+        b_eye_l.scale.z =0.5;
+        b_eye_l.scale.y =1;
+        b_eye_l.scale.x =0.5;
+        b_eye_l.position.set(-0.23,0.71,1.66);
+        //左目
+        var eye_g = new THREE.SphereGeometry( 0.12, 32, 32 );
+        var material_eye = new THREE.MeshPhongMaterial({ color: 0xffffff });
+        var l_eye = new THREE.Mesh( eye_g, material_eye);
+        l_eye.scale.x =1.2;
+        l_eye.position.set(0.2,0.7,1.56);
+
+        //右目
+        var r_eye = new THREE.Mesh( eye_g, material_eye);
+        l_eye.scale.x =1.2;
+        r_eye.position.set(-0.2,0.7,1.56);
+
+        //ペンギンのオブジェクト
+        const pengin = new THREE.Group();
+        pengin.add(head); // 頭を追加
+        pengin.add(body); //体を追加
+        pengin.add(tale);
+        pengin.add(lleg); //左足を追加
+        pengin.add(rleg); //右足を追加    
+        pengin.add(l2leg); //左足を追加
+        pengin.add(r2leg);    
+        pengin.add(ear_r); //くちばし
+        pengin.add(ear_l);
+        pengin.add(kuti);
+        pengin.add(b_eye_r);
+        pengin.add(b_eye_l);
+        pengin.add(l_eye); //左目
+        pengin.add(r_eye); //右目
+        pengin.position.set(0,1,0);//ペンギングループの原点の位置
+        scene.add(pengin);
+
+        var body_n = new THREE.SphereGeometry( 0.3, 32, 32 );
+        var material_nr = new THREE.MeshPhongMaterial({ color: 0xcccccc });
+        var body_n = new THREE.Mesh( body_n, material_nr);
+        body_n.scale.z =1;
+        body_n.scale.y =0.4;
+        body_n.scale.x =0.6;
+        body_n.position.set(0,0.1,2);
+
+        var eye_n = new THREE.SphereGeometry( 0.03, 32, 32 );
+        var material_be = new THREE.MeshPhongMaterial({ color: 0x000000 });
+        var bn_eye_r = new THREE.Mesh( eye_n, material_be);
+        bn_eye_r.scale.z =1;
+        bn_eye_r.scale.y =1;
+        bn_eye_r.scale.x =1;
+        bn_eye_r.position.set(0.08,0.19,2.2);
+
+        var bn_eye_l =  new THREE.Mesh( eye_n, material_be);
+        bn_eye_l.scale.z =1;
+        bn_eye_l.scale.y =1;
+        bn_eye_l.scale.x =1;
+        bn_eye_l.position.set(-0.08,0.19,2.2);
+
+        var tale_n = new THREE.SphereGeometry( 0.1, 32, 32 );
+        var material_tale = new THREE.MeshPhongMaterial({ color: 0xcccccc });
+        var ntale = new THREE.Mesh( tale_n, material_tale);
+        ntale.scale.z =0.25;
+        ntale.scale.y =1.2;
+        ntale.scale.x =0.25;
+        ntale.position.set(0,0.25,1.8);
+
+        const nezumi = new THREE.Group();
+        nezumi.add(body_n);
+        nezumi.add(bn_eye_r);
+        nezumi.add(bn_eye_l);
+        nezumi.add (ntale);
+        nezumi.position.set(0,0.1,2);
+        scene.add(nezumi);
+
+        //全体のオブジェクト
+        const all = new THREE.Group();
+        all.add(plane);//平面を追加
+        all.add(pengin); // ペンギンを追加
+        all.add(nezumi);
+        all.position.set(0,0.05,0);//全体グループの原点の位置
+        scene.add(all); 
+
+        update();
+
+        // 毎フレーム時に実行されるループイベントです
+        function update() {
+          // レンダリング
+          renderer.render(scene, camera);
+          requestAnimationFrame(update);
+          pengin.position.z += 0.01;
+          if(pengin.position.z >5 )
+          {
+            pengin.position.z -= 0.01;
+          }
+          
+          nezumi.position.z += 0.005;
+          if(nezumi .position.z >4.4)
+          {
+            nezumi.position.z -= 0.005
+          }
+      
+
+          // 全体を回転させる
+          //all.rotation.x += 0.01;
+          //all.rotation.y += 0.005;;
+        }
+      }
+    </script>
+</body>
+</html>
