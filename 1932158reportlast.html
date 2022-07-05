@@ -27,7 +27,7 @@
         // カメラを作成
         const camera = new THREE.PerspectiveCamera(45, width / height);
         // カメラの初期座標を設定
-        camera.position.set(0, 5, 10);
+        camera.position.set(0, 5, 15);
 
         // カメラコントローラーを作成
         const controls = new THREE.OrbitControls(camera, document.body); 
@@ -50,7 +50,7 @@
         var texture5 = textureLoader5.load("zimen2.jpg");
         var mat5 = new THREE.MeshPhongMaterial();
         mat5.map = texture5;
-        var planeGeometry = new THREE.PlaneGeometry(10,20,10,10);
+        var planeGeometry = new THREE.PlaneGeometry(10,25,10,10);
         var plane = new THREE.Mesh(planeGeometry,mat5);
         plane.rotation.set( -Math.PI/2, 0, 0 );
         plane.position.set(0,0,0);
@@ -225,16 +225,25 @@
           // レンダリング
           renderer.render(scene, camera);
           requestAnimationFrame(update);
-          pengin.position.z += 0.01;
-          if(pengin.position.z >5 )
+          if(pengin.position.z > -1)
           {
-            pengin.position.z -= 0.01;
+            pengin.position.z += 0.02;
+          }
+          if(pengin.position.z >7)
+          {
+            pengin.position.z += 0.02;
+            lleg.rotation.x =-1;
+            rleg.rotation.x =-1;
+          }
+          if(pengin.position.z >10 )
+          {
+            pengin.position.z -= 0.04;
           }
           
-          nezumi.position.z += 0.005;
-          if(nezumi .position.z >4.4)
+          nezumi.position.z += 0.018;
+          if(nezumi .position.z >9.5)
           {
-            nezumi.position.z -= 0.005
+            nezumi.position.z -= 0.018
           }
          
 
@@ -247,5 +256,4 @@
       }
     </script>
 </body>
-</html>
 </html>
