@@ -46,16 +46,16 @@
     
 
         // 平面を作成
-        var textureLoader1 = new THREE.TextureLoader();
-        var texture1 = textureLoader1.load("zimen2.jpg");
-        var mat1 = new THREE.MeshPhongMaterial();
-        mat1.map = texture1;
-         var planeGeometry = new THREE.PlaneGeometry(10,20,10,10);
-
-        var plane = new THREE.Mesh(planeGeometry,mat1);
+        var textureLoader5= new THREE.TextureLoader();
+        var texture5 = textureLoader5.load("zimen2.jpg");
+        var mat5 = new THREE.MeshPhongMaterial();
+        mat5.map = texture5;
+        var planeGeometry = new THREE.PlaneGeometry(10,20,10,10);
+        var plane = new THREE.Mesh(planeGeometry,mat5);
         plane.rotation.set( -Math.PI/2, 0, 0 );
         plane.position.set(0,0,0);
         scene.add(plane);
+
         // 頭を作成
         var head_g = new THREE.SphereGeometry( 0.6, 25, 25 );
         var material_b = new THREE.MeshPhongMaterial({ color: 0xffffcc });
@@ -236,6 +236,8 @@
           {
             nezumi.position.z -= 0.005
           }
+         
+
       
 
           // 全体を回転させる
@@ -245,4 +247,5 @@
       }
     </script>
 </body>
+</html>
 </html>
